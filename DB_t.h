@@ -2,49 +2,49 @@
 
 using namespace std;
 
-class DB_t
+/*class DB_t
 {
 	public:
 		DB_t();
 		virtual ~DB_t();		
 		virtual Command_t* InsertData(Command_t* _comm) = 0;
-};
+};*/
 
-class BorrowerDB_t : public DB_t
+class BorrowersManager_t : 
 {
 	public:
-		BorrowerDB_t();
-		virtual ~BorrowerDB_t();		
-		virtual Command_t* InsertData(Command_t* _comm);
+		BorrowersManager_t();
+		virtual ~BorrowersManager_t();		
+		virtual Command_t* ProcessCommand(Command_t* _comm);
 		void AddBorrower(const Borrower_t* _borrower);
-		void RemoveBorrower(int _ID);
-		Borrower_t* FindBorrower(int _ID) const;
-		Borrower_t* FindBorrower(const string& _name) const;
-		Report_t* ReportAllBorrowers() const;
+		bool RemoveBorrower(int _ID);
+		const Borrower_t& FindBorrower(int _ID) const;
+		const Borrower_t& FindBorrower(const string& _name) const;
+		const Report_t& ReportAllBorrowers() const;
 	private:
 		map<int, Borrower_t*> m_borrowersByID;
-		map<string*, Borrower_t*> m_borrowerByName;
+		map<string, Borrower_t*> m_borrowerByName;
 };
 
-class BookDB_t : public DB_t
+class BooksManager_t 
 {
 	public:
-		BookDB_t();
-		virtual ~BookDB_t();
-		Report_t* ReportBooksByName(const string& _name) const;
-		Report_t* ReportBooksByAuthor(const string& _author) const;
-		Report_t* ReportBooksBySubject(const string& _subject) const; 
-		void AddBook(const Book_t* _book);
+		BooksManager_t();
+		virtual ~BooksManager_t();
+		const Report_t& ReportBooksByName(const string& _name) const;
+		const Report_t& ReportBooksByAuthor(const string& _author) const;
+		const Report_t& ReportBooksBySubject(const string& _subject) const; 
+		void AddBook(const Book_t& _book);
 		bool RemoveBook(int _bookID);
 		list<Book_t*> FindBook(const string& _name, const string& _author, const string& _subject) const;
-		Report_t* GenerateReport() const;
+		const Report_t& GenerateReport() const;
 	private:
-		map<string*, Book_t*> m_bookByName;
-		map<string*, Book_t*> m_bookByAuthor;
-		map<string*, Book_t*> m_bookBySubject;
+		map<string, Book_t*> m_bookByName;
+		map<string, Book_t*> m_bookByAuthor;
+		map<string, Book_t*> m_bookBySubject;
 };
 
-class AdminDB_t : public DB_t
+class AdminDB_t 
 {
 	public:	
 		AdminDB_t();
